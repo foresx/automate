@@ -75,7 +75,7 @@ func SendReportToGRPC(file string, threadCount int, reportsPerThread int) error 
 				logrus.Fatalf("Don't understand operand %s when processing dynamic report %s. Only MINUS and PLUS are supported.", split_file[3], json_file)
 			}
 			iReport.EndTime = new_end_date.UTC().Format(time.RFC3339)
-			logrus.Infof("[%s] Ingesting dynamic report with updated end_time (%s)", time.Now().UTC().Format(time.RFC3339), iReport.EndTime)
+			logrus.Infof("[%s] Ingesting dynamic report (%s) with updated end_time (%s)", time.Now().UTC().Format(time.RFC3339), iReport.ReportUuid, iReport.EndTime)
 		} else {
 			logrus.Fatalf("'%s' not supported after NOW, only 'MINUS', aborting file %s", split_file[1], json_file)
 		}
