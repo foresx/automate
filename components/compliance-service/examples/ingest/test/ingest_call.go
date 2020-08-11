@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"time"
+	"strings"
+	"strconv"
 
 	"github.com/gofrs/uuid"
 	"github.com/golang/protobuf/jsonpb"
@@ -44,6 +46,41 @@ func SendReportToGRPC(file string, threadCount int, reportsPerThread int) error 
 		logrus.Errorf("ingest_call.go - reportToGRPC was unable to unmarshal the report output into a compliance.Report struct: %s", err.Error())
 		return err
 	}
+
+	// Using the filename to change the end_time of the report based on the current date and time
+	if strings.HasPrefix(file, "NOW") {
+		logrus.Debugf("Ingestic special report file (%s) with dynamic end_time.", file)
+		split_file := strings.Split(file, "_")
+		if (len(split_file) < 5) {
+		  logrus.Fatalf("Dynamic report file (%s) is invalid. starting with NOW must have at least 4 underscores. Example: ", file)
+		}
+		new_end_date := time.Now()
+		logrus.Debugf("split_file=%+v", split_file)
+		if (split_file[1] == "MINUS") {
+			first_minutes, err := strconv.Atoi(split_file[2])
+			if err != nil {
+				logrus.Fatalf("Can't convert '%s' to integer, skipping file %s", split_file[2], file)
+			}
+			second_minutes, err := strconv.Atoi(split_file[4])
+			if err != nil {
+				logrus.Fatalf("Can't convert '%s' to integer, skipping file %s", split_file[4], file)
+			}
+			new_end_date = new_end_date.Add(-time.Duration(first_minutes) * time.Minute)
+			if (split_file[3] == "MINUS") {
+				new_end_date = new_end_date.Add(-time.Duration(second_minutes) * time.Minute)
+			} else if (split_file[3] == "PLUS") {
+				new_end_date = new_end_date.Add(time.Duration(second_minutes) * time.Minute)
+			} else {
+				logrus.Fatalf("Don't understand operand %s when processing dynamic file %s. Only MINUS and PLUS are supported.", split_file[3], file)
+			}
+			iReport.EndTime = new_end_date.UTC().Format(time.RFC3339)
+		} else {
+			logrus.Fatalf("'%s' not supported after NOW, only 'MINUS', skipping file %s", split_file[1], file)
+		}
+	} else {
+		logrus.Debugf("!!!!!!!!!! NOT SPECIAL %s", file)
+	}
+
 
 	client := ingest.NewComplianceIngesterClient(conn)
 	if client == nil {
