@@ -35,7 +35,7 @@ describe File.basename(__FILE__) do
     )
 
     # List nodes, no filters
-    resp = GRPC reporting, :list_nodes, Reporting::Query.new(filters: [])
+    actual_nodes = GRPC reporting, :list_nodes, Reporting::Query.new(filters: [])
     expected_nodes = { "guess_what": true }
     assert_equal_json_sorted(expected_nodes.to_json, actual_nodes.to_json)
 
