@@ -723,38 +723,136 @@ describe File.basename(__FILE__) do
         size: 10
     )
     expected_data = {
-      "controlItems"=>[
-       {"id"=>"pro1-con1",
-        "title"=>"Profile 1 - Control 1",
-        "profile"=>{"title"=>"My Profile 1 title", "id"=>"447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4", "version"=>"1.0.1"},
-        "impact"=>0.80000001,
-        "endTime"=>"2020-08-14T09:23:24Z",
-        "controlSummary"=>{"total"=>1, "passed"=>{"total"=>1}, "skipped"=>{}, "failed"=>{}, "waived"=>{}}},
-       {"id"=>"pro1-con2",
-        "title"=>"Profile 1 - Control 2",
-        "profile"=>{"title"=>"My Profile 1 title", "id"=>"447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4", "version"=>"1.0.1"},
-        "impact"=>0.89999998,
-        "endTime"=>"2020-08-14T09:23:24Z",
-        "controlSummary"=>{"total"=>1, "passed"=>{}, "skipped"=>{"total"=>1}, "failed"=>{}, "waived"=>{}}},
-       {"id"=>"pro1-con3",
-        "title"=>"Profile 1 - Control 3",
-        "profile"=>{"title"=>"My Profile 1 title", "id"=>"447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4", "version"=>"1.0.1"},
-        "impact"=>1,
-        "endTime"=>"2020-08-14T09:23:24Z",
-        "controlSummary"=>{"total"=>1, "passed"=>{"total"=>1}, "skipped"=>{}, "failed"=>{}, "waived"=>{}}},
-       {"id"=>"pro1-con4",
-        "title"=>"Profile 1 - Control 4",
-        "profile"=>{"title"=>"My Profile 1 title", "id"=>"447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4", "version"=>"1.0.1"},
-        "impact"=>0.89999998,
-        "endTime"=>"2020-08-14T09:23:24Z",
-        "controlSummary"=>{"total"=>1, "passed"=>{"total"=>1}, "skipped"=>{}, "failed"=>{}, "waived"=>{}}},
-       {"id"=>"pro1-con5",
-        "title"=>"Profile 1 - Control 5",
-        "profile"=>{"title"=>"My Profile 1 title", "id"=>"447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4", "version"=>"1.0.1"},
-        "impact"=>0.89999998,
-        "endTime"=>"2020-08-14T09:23:24Z",
-        "controlSummary"=>{"total"=>1, "passed"=>{"total"=>1}, "skipped"=>{}, "failed"=>{}, "waived"=>{}}}],
-     "controlSummaryTotals"=>{"total"=>5, "passed"=>{"total"=>4}, "skipped"=>{"total"=>1}, "failed"=>{}, "waived"=>{}}
+      "controlItems": [
+        {
+          "id": "pro1-con1",
+          "title": "Profile 1 - Control 1",
+          "profile": {
+            "title": "My Profile 1 title",
+            "id": "447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4",
+            "version": "1.0.1"
+          },
+          "impact": 0.80000001,
+          "endTime": "2020-08-15T09:23:24Z",
+          "controlSummary": {
+            "total": 1,
+            "passed": {
+              "total": 1
+            },
+            "skipped": {
+            },
+            "failed": {
+            },
+            "waived": {
+            }
+          }
+        },
+        {
+          "id": "pro1-con2",
+          "title": "Profile 1 - Control 2",
+          "profile": {
+            "title": "My Profile 1 title",
+            "id": "447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4",
+            "version": "1.0.1"
+          },
+          "impact": 0.89999998,
+          "endTime": "2020-08-14T09:23:24Z",
+          "controlSummary": {
+            "total": 1,
+            "passed": {
+            },
+            "skipped": {
+              "total": 1
+            },
+            "failed": {
+            },
+            "waived": {
+            }
+          }
+        },
+        {
+          "id": "pro1-con3",
+          "title": "Profile 1 - Control 3",
+          "profile": {
+            "title": "My Profile 1 title",
+            "id": "447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4",
+            "version": "1.0.1"
+          },
+          "impact": 1,
+          "endTime": "2020-08-14T09:23:24Z",
+          "controlSummary": {
+            "total": 1,
+            "passed": {
+              "total": 1
+            },
+            "skipped": {
+            },
+            "failed": {
+            },
+            "waived": {
+            }
+          }
+        },
+        {
+          "id": "pro1-con4",
+          "title": "Profile 1 - Control 4",
+          "profile": {
+            "title": "My Profile 1 title",
+            "id": "447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4",
+            "version": "1.0.1"
+          },
+          "impact": 0.89999998,
+          "endTime": "2020-08-14T09:23:24Z",
+          "controlSummary": {
+            "total": 1,
+            "passed": {
+              "total": 1
+            },
+            "skipped": {
+            },
+            "failed": {
+            },
+            "waived": {
+            }
+          }
+        },
+        {
+          "id": "pro1-con5",
+          "title": "Profile 1 - Control 5",
+          "profile": {
+            "title": "My Profile 1 title",
+            "id": "447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4",
+            "version": "1.0.1"
+          },
+          "impact": 0.89999998,
+          "endTime": "2020-08-14T09:23:24Z",
+          "controlSummary": {
+            "total": 1,
+            "passed": {
+              "total": 1
+            },
+            "skipped": {
+            },
+            "failed": {
+            },
+            "waived": {
+            }
+          }
+        }
+      ],
+      "controlSummaryTotals": {
+        "total": 5,
+        "passed": {
+          "total": 4
+        },
+        "skipped": {
+          "total": 1
+        },
+        "failed": {
+        },
+        "waived": {
+        }
+      }
     }
     assert_equal_json_content(expected_data, actual_data)
   end
