@@ -1712,7 +1712,51 @@ describe File.basename(__FILE__) do
     actual_node_hash = actual_node.to_h
     actual_node_hash[:latest_report][:end_time] = 'SOMETIME_IN_THE_LAST_24H'
 
-    expected_node = {}
+    expected_node = {
+      "environment": "DevSec Prod Omega",
+      "id": "34cbbb4c-c502-4971-1111-888888888888",
+      "latest_report": {
+        "controls": {
+          "failed": {
+            "critical": 0,
+            "major": 0,
+            "minor": 0,
+            "total": 0
+          },
+          "passed": {
+            "total": 4
+          },
+          "skipped": {
+            "total": 1
+          },
+          "total": 5,
+          "waived": {
+            "total": 0
+          }
+        },
+        "end_time": "SOMETIME_IN_THE_LAST_24H",
+        "id": "44024b50-2e0d-42fa-cccc-aaaaaaaaa003",
+        "status": "passed"
+      },
+      "name": "osx(2)-omega-pro1(f)-pro2(w)-failed",
+      "platform": {
+        "full": "mac_os_x 17.7.0",
+        "name": "mac_os_x",
+        "release": "17.7.0"
+      },
+      "profiles": [
+        {
+          "full": "My Profile 1 title, v1.0.1",
+          "id": "447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4",
+          "name": "myprofile1",
+          "status": "passed",
+          "version": "1.0.1"
+        }
+      ],
+      "tags": [
+
+      ]
+    }
     assert_equal_json_sorted( expected_node.to_json, actual_node_hash.to_json)
 
     # Node details API
