@@ -175,15 +175,18 @@ func GetEsIndex(filters map[string][]string, useSummaryIndex bool, useStartTime 
 	if err != nil {
 		return esIndex, err
 	}
-
-	if len(filters["start_time"]) == 0 && len(filters["end_time"]) == 0 {
+	logrus.Debugf("!!!!!!1 GetEsIndex called with filters=%+v   useSummaryIndex %t, useStartTime %t", filters, useSummaryIndex, useStartTime)
+	if useStartTime {
+		startDateAsString = firstOrEmpty(filters["start_time"])
+		logrus.Debugf("!!!!!!2 GetEsIndex (if) returning startDateAsString = %s", startDateAsString)
+	} else if len(filters["start_time"]) == 0 && len(filters["end_time"]) == 0 {
 		// If no `start_time` and `end_time` are provided, we use start_date as yesterday's UTC date
 		// and `end_date` as today's UTC day. This way, we have the indices to query the last 24 hours worth of reports
 		startDateAsString = time.Now().Add(-24 * time.Hour).UTC().Format(time.RFC3339)
-	} else if useStartTime {
-		startDateAsString = firstOrEmpty(filters["start_time"])
+		logrus.Debugf("!!!!!!2 GetEsIndex (else if) returning startDateAsString = %s", startDateAsString)
 	} else {
 		startDateAsString = endDateAsString
+		logrus.Debugf("!!!!!!2 GetEsIndex (else) returning startDateAsString = %s", startDateAsString)
 	}
 
 	jobId := firstOrEmpty(filters["job_id"])
