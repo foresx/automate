@@ -1551,7 +1551,74 @@ describe File.basename(__FILE__) do
     # Get nodes without end_time filter (last 24h search)
     actual_nodes = GRPC reporting, :list_nodes, Reporting::Query.new(filters: [])
     expected_nodes = {
-      "nodes" => 99999 }.to_json
+      "nodes": [
+        {
+          "environment": "DevSec Prod Alpha",
+          "id": "888f4e51-b049-4b10-9555-111222333333",
+          "latestReport": {
+            "controls": {
+              "failed": {
+              },
+              "passed": {
+              },
+              "skipped": {
+              },
+              "waived": {
+              }
+            },
+            "endTime": "2020-08-14T09:53:28Z",
+            "id": "zz93e1b2-36d6-439e-ac70-cccccccceemm",
+            "status": "failed"
+          },
+          "name": "ubuntu(0)-alpha-failed",
+          "platform": {
+            "full": "unknown unknown",
+            "name": "unknown",
+            "release": "unknown"
+          }
+        },
+        {
+          "environment": "DevSec Prod Omega",
+          "id": "34cbbb4c-c502-4971-1111-888888888888",
+          "latestReport": {
+            "controls": {
+              "failed": {
+              },
+              "passed": {
+                "total": 4
+              },
+              "skipped": {
+                "total": 1
+              },
+              "total": 5,
+              "waived": {
+              }
+            },
+            "endTime": "2020-08-14T09:23:24Z",
+            "id": "44024b50-2e0d-42fa-cccc-aaaaaaaaa003",
+            "status": "passed"
+          },
+          "name": "osx(2)-omega-pro1(f)-pro2(w)-failed",
+          "platform": {
+            "full": "mac_os_x 17.7.0",
+            "name": "mac_os_x",
+            "release": "17.7.0"
+          },
+          "profiles": [
+            {
+              "full": "My Profile 1 title, v1.0.1",
+              "id": "447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4",
+              "name": "myprofile1",
+              "status": "passed",
+              "version": "1.0.1"
+            }
+          ]
+        }
+      ],
+      "total": 2,
+      "totalFailed": 1,
+      "totalPassed": 1
+    }.to_json
     assert_equal_json_sorted(expected_nodes, actual_nodes.to_json)
 
     # Cover the other sort fields:
