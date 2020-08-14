@@ -8,7 +8,6 @@ import (
 	"sort"
 	"strings"
 	"time"
-  "runtime/debug"
 
 	"github.com/golang/protobuf/ptypes"
 	"github.com/pkg/errors"
@@ -1162,13 +1161,12 @@ func (backend ES2Backend) getFiltersQuery(filters map[string][]string, latestOnl
 			termQuery := elastic.NewTermsQuery("daily_latest", true)
 			boolQuery = boolQuery.Must(termQuery)
 		} else {
-			debug.PrintStack()
 			// If we don't have an end_time filter, we use the day_latest filter and the last 24 hours timeframe
-			termQuery := elastic.NewTermsQuery("day_latest", true)
-			boolQuery = boolQuery.Must(termQuery)
-			timeRangeQuery := elastic.NewRangeQuery("end_time")
-			timeRangeQuery.Gt(time.Now().Add(-24 * time.Hour).UTC().Format(time.RFC3339))
-			boolQuery = boolQuery.Must(timeRangeQuery)
+			//termQuery := elastic.NewTermsQuery("day_latest", true)
+			//boolQuery = boolQuery.Must(termQuery)
+			//timeRangeQuery := elastic.NewRangeQuery("end_time")
+			//timeRangeQuery.Gt(time.Now().Add(-24 * time.Hour).UTC().Format(time.RFC3339))
+			//boolQuery = boolQuery.Must(timeRangeQuery)
 		}
 	}
 

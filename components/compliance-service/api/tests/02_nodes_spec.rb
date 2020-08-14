@@ -34,6 +34,11 @@ describe File.basename(__FILE__) do
                  resp['nodes'].map {|x| x['name']},
     )
 
+    # List nodes, no filters
+    resp = GRPC reporting, :list_nodes, Reporting::Query.new(filters: [])
+    expected_nodes = { "guess_what": true }
+    assert_equal_json_sorted(expected_nodes.to_json, actual_nodes.to_json)
+
     # Get all nodes, sorted by latest_report(default), asc(default) order
     # Hits only daily index 2018-03-05
     actual_nodes = GRPC reporting, :list_nodes, Reporting::Query.new(filters: [
