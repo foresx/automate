@@ -716,4 +716,20 @@ describe File.basename(__FILE__) do
     }
     assert_equal_json_content(expected_data, actual_data)
   end
+
+  it "control list items without time filters (last 24h search)" do
+    actual_data = GRPC reporting, :list_control_items, Reporting::ControlItemRequest.new(
+        filters: [],
+        size: 10
+    )
+    expected_data = {
+      "controlSummaryTotals" => {
+        "passed" => 99999,
+        "skipped" => {},
+        "failed" => {},
+        "waived" => {}
+      }
+    }
+    assert_equal_json_content(expected_data, actual_data)
+  end
 end

@@ -1548,6 +1548,12 @@ describe File.basename(__FILE__) do
     }.to_json
     assert_equal_json_sorted(expected_nodes, actual_nodes.to_json)
 
+    # Get nodes without end_time filter (last 24h search)
+    actual_nodes = GRPC reporting, :list_nodes, Reporting::Query.new(filters: [])
+    expected_nodes = {
+      "nodes" => 99999 }.to_json
+    assert_equal_json_sorted(expected_nodes, actual_nodes.to_json)
+
     # Cover the other sort fields:
     resp = GRPC reporting, :list_nodes, Reporting::Query.new(
       filters: [Reporting::ListFilter.new(type: 'end_time', values: ['2018-03-04T23:59:59Z'])], sort: 'platform', order: 1)

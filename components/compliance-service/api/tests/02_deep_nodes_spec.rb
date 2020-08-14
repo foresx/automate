@@ -1070,5 +1070,11 @@ describe File.basename(__FILE__) do
      "totalFailed" => 1 }.to_json
     assert_equal_json_sorted(expected_nodes, actual_nodes.to_json)
 
+    # List nodes with profile filter and without end_time filter (last 24h search)
+    actual_nodes = GRPC reporting, :list_nodes, Reporting::Query.new(filters: [
+        Reporting::ListFilter.new(type: 'profile_id', values: ['447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4'])
+    ])
+    expected_nodes = {}.to_json
+    assert_equal_json_sorted(expected_nodes, actual_nodes.to_json)
   end
 end
