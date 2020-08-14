@@ -1081,7 +1081,7 @@ describe File.basename(__FILE__) do
         {
           "environment": "DevSec Prod Omega",
           "id": "34cbbb4c-c502-4971-1111-888888888888",
-          "latestReport": {
+          "latest_report": {
             "controls": {
               "failed": {
               },
@@ -1095,7 +1095,7 @@ describe File.basename(__FILE__) do
               "waived": {
               }
             },
-            "endTime": "SOMETIME_IN_THE_LAST_24H",
+            "end_time": "SOMETIME_IN_THE_LAST_24H",
             "id": "44024b50-2e0d-42fa-cccc-aaaaaaaaa003",
             "status": "passed"
           },
@@ -1117,7 +1117,7 @@ describe File.basename(__FILE__) do
         }
       ],
       "total": 1,
-      "totalPassed": 1
+      "total_passed": 1
     }.to_json
     assert_equal_json_sorted(expected_nodes, actual_nodes_hash.to_json)
   end
