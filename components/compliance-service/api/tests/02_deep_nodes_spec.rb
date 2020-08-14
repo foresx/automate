@@ -1084,6 +1084,10 @@ describe File.basename(__FILE__) do
           "latest_report": {
             "controls": {
               "failed": {
+                "critical": 0,
+                "major": 0,
+                "minor": 0,
+                "total": 0
               },
               "passed": {
                 "total": 4
@@ -1093,6 +1097,7 @@ describe File.basename(__FILE__) do
               },
               "total": 5,
               "waived": {
+                "total": 0
               }
             },
             "end_time": "SOMETIME_IN_THE_LAST_24H",
@@ -1113,11 +1118,17 @@ describe File.basename(__FILE__) do
               "status": "passed",
               "version": "1.0.1"
             }
+          ],
+          "tags": [
+
           ]
         }
       ],
       "total": 1,
-      "total_passed": 1
+      "total_failed": 0,
+      "total_passed": 1,
+      "total_skipped": 0,
+      "total_waived": 0
     }.to_json
     assert_equal_json_sorted(expected_nodes, actual_nodes_hash.to_json)
   end
