@@ -1763,7 +1763,41 @@ describe File.basename(__FILE__) do
     actual_node = GRPC reporting, :read_node, Reporting::Id.new(id: '888f4e51-b049-4b10-9555-111222333333')
     actual_node_hash = actual_node.to_h
     actual_node_hash[:latest_report][:end_time] = 'SOMETIME_IN_THE_LAST_24H'
-    expected_node = {}
+    expected_node = {
+      "environment": "DevSec Prod Alpha",
+      "id": "888f4e51-b049-4b10-9555-111222333333",
+      "latest_report": {
+        "controls": {
+          "failed": {
+            "critical": 0,
+            "major": 0,
+            "minor": 0,
+            "total": 0
+          },
+          "passed": {
+            "total": 0
+          },
+          "skipped": {
+            "total": 0
+          },
+          "total": 0,
+          "waived": {
+            "total": 0
+          }
+        },
+        "end_time": "SOMETIME_IN_THE_LAST_24H",
+        "id": "zz93e1b2-36d6-439e-ac70-cccccccceemm",
+        "status": "failed"
+      },
+      "name": "ubuntu(0)-alpha-failed",
+      "platform": {
+        "full": "unknown unknown",
+        "name": "unknown",
+        "release": "unknown"
+      },
+      "profiles": [],
+      "tags": []
+    }
     assert_equal_json_sorted( expected_node.to_json, actual_node_hash.to_json)
 
     # Node details API
