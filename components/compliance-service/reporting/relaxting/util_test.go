@@ -5,6 +5,7 @@ import (
   "github.com/stretchr/testify/assert"
   "github.com/chef/automate/components/compliance-service/ingest/ingestic/mappings"
   "time"
+  "strings"
 )
 
 
@@ -13,10 +14,15 @@ func TestGetEsIndex(t *testing.T) {
   rep := mappings.IndexNameRep
 
   filters := make(map[string][]string)
+  // Used by calls like ListReportIds to get all report IDs from the beginning of time
+  index, err :=	GetEsIndex(filters, false, true)
+  assert.NoError(t, err)
+  assert.True(t, strings.HasPrefix(index, rep + "-2017*,"+rep+"-2018*,"+rep+"-2019*,"+rep+"-2020"))
+
   filters["profile_id"] = []string{"prof1", "prof2"}
   filters["end_time"] = []string{"2019-01-05T23:59:59Z", "2019-01-06T23:59:59Z"} // 2019-01-06 should be ignored
 
-  index, err :=	GetEsIndex(filters, true, false)
+  index, err =	GetEsIndex(filters, true, false)
   assert.Equal(t, sum + "-2019.01.05*", index)
   assert.NoError(t, err)
 

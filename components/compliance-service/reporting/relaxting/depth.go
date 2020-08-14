@@ -80,6 +80,7 @@ func (backend ES2Backend) NewDepth(filters map[string][]string, useStartTime boo
 		return nil, errors.Wrap(err, "GetLevelStats")
 	}
 
+	logrus.Debugf("?????1 Calling getFiltersQuery with filters=%+v, latestOnly=%t", filters, latestOnly)
 	filtQuery := backend.getFiltersQuery(filters, latestOnly)
 
 	level := GetFilterDepth(filters)

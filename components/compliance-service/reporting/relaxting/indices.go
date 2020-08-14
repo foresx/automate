@@ -76,14 +76,14 @@ func IndexDates(prefix string, startTimeAsStringRFC3338 string, endTimeAsStringR
 		}
 	}
 
-	logrus.Debugf("startTime: %s endTime: %s", startTime, endTime)
+	//logrus.Debugf("startTime: %s endTime: %s", startTime, endTime)
 	if startTime.After(endTime) {
 		err = errors.New(StartDateGreaterThanEndDateErrMsg)
 		return indices, err
 	}
 	indicesYears, straddleYears, _ := wholeCalendarYears(prefix, startTime, endTime)
 	indices += indicesYears
-	logrus.Debugf("indices years %s", indices)
+	//logrus.Debugf("indices years %s", indices)
 
 	indices = appendIndices(indices, processYearsStraddle(prefix, straddleYears.left))
 	indices = appendIndices(indices, processYearsStraddle(prefix, straddleYears.right))
@@ -256,7 +256,7 @@ func twenties(prefix string, startTime time.Time, endTime time.Time, indexFormat
 
 	if startTime.Day() <= startRange && endTime.Day() >= endRange {
 		indices = appendIndices(indices, fmt.Sprintf(indexFormat+".2*", prefix, startTime.Year(), int(startTime.Month())))
-		logrus.Debugf("twenties (all): %s", indices)
+		//logrus.Debugf("twenties (all): %s", indices)
 		return indices
 	}
 
@@ -272,7 +272,7 @@ func twenties(prefix string, startTime time.Time, endTime time.Time, indexFormat
 			indices = appendIndices(indices, fmt.Sprintf(indexFormat+".%d*", prefix, startTime.Year(), int(startTime.Month()), i))
 		}
 	}
-	logrus.Debugf("twenties (some): %s", indices)
+	//logrus.Debugf("twenties (some): %s", indices)
 	return indices
 }
 
@@ -283,7 +283,7 @@ func thirties(prefix string, startTime time.Time, endTime time.Time, indexFormat
 	logrus.Debugf("starttime: %s, endtime: %s", startTime, endTime)
 	if startTime.Day() <= startRange && endTime.Day() >= endRange {
 		indices = appendIndices(indices, fmt.Sprintf(indexFormat+".3*", prefix, startTime.Year(), int(startTime.Month())))
-		logrus.Debugf("thirties (all): %s", indices)
+		//logrus.Debugf("thirties (all): %s", indices)
 		return indices
 	}
 
@@ -299,7 +299,7 @@ func thirties(prefix string, startTime time.Time, endTime time.Time, indexFormat
 			indices = appendIndices(indices, fmt.Sprintf(indexFormat+".%d*", prefix, startTime.Year(), int(startTime.Month()), i))
 		}
 	}
-	logrus.Debugf("thirties (some): %s", indices)
+	//logrus.Debugf("thirties (some): %s", indices)
 	return indices
 }
 

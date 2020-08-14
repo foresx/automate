@@ -1061,6 +1061,7 @@ func (backend *ES2Backend) getWaiverData(waiverDataBuckets *elastic.AggregationB
 //  return *elastic.BoolQuery
 func (backend ES2Backend) getFiltersQuery(filters map[string][]string, latestOnly bool) *elastic.BoolQuery {
 	utils.DeDupFilters(filters)
+	logrus.Debugf("?????2 Called getFiltersQuery with filters=%+v, latestOnly=%t", filters, latestOnly)
 
 	typeQuery := elastic.NewTypeQuery(mappings.DocType)
 
