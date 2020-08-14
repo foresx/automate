@@ -1154,9 +1154,19 @@ func (backend ES2Backend) getFiltersQuery(filters map[string][]string, latestOnl
 		termQuery := elastic.NewTermsQuery("job_uuid", stringArrayToInterfaceArray(filters["job_id"])...)
 		boolQuery = boolQuery.Must(termQuery)
 	} else if latestOnly {
-		//only if there is no job_id filter set, do we want the daily latest
-		termQuery := elastic.NewTermsQuery("daily_latest", true)
-		boolQuery = boolQuery.Must(termQuery)
+		// only if there is no job_id filter set, do we want the daily latest
+		if len(filters["end_time"]) > 0 {
+			// If we have an end_time filter, we use the daily_latest filter dedicated to the UTC timeseries indices
+			termQuery := elastic.NewTermsQuery("daily_latest", true)
+			boolQuery = boolQuery.Must(termQuery)
+		} else {
+			// If we don't have an end_time filter, we use the day_latest filter and the last 24 hours timeframe
+			termQuery := elastic.NewTermsQuery("day_latest", true)
+			boolQuery = boolQuery.Must(termQuery)
+			timeRangeQuery := elastic.NewRangeQuery("end_time")
+			timeRangeQuery.Gt(time.Now().Add(-24 * time.Hour).UTC().Format(time.RFC3339))
+			boolQuery = boolQuery.Must(timeRangeQuery)
+		}
 	}
 
 	// Going through all filters to find the ones prefixed with 'control_tag', e.g. 'control_tag:nist'
