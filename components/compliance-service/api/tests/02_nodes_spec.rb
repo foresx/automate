@@ -1761,19 +1761,10 @@ describe File.basename(__FILE__) do
 
     # Node details API
     actual_node = GRPC reporting, :read_node, Reporting::Id.new(id: '888f4e51-b049-4b10-9555-111222333333')
-    expected_node = {
-      "environment" => "DevSec Prod Alpha",
-      "id" => "888f4e51-b049-4b10-9555-111222333333",
-      "latestReport" => {
-        "controls" => { "failed" => {}, "passed" => {}, "skipped" => {}, "waived" => {} },
-        "endTime" => "2018-04-03T11:02:02Z",
-        "id" => "zz93e1b2-36d6-439e-ac70-cccccccccckk",
-        "status" => "failed"
-      },
-      "name" => "ubuntu(0)-alpha-failed",
-      "platform" => { "full" => "unknown unknown", "name" => "unknown", "release" => "unknown" }
-    }
-    assert_equal_json_sorted( expected_node.to_json, actual_node.to_json)
+    actual_node_hash = actual_node.to_h
+    actual_node_hash[:latest_report][:end_time] = 'SOMETIME_IN_THE_LAST_24H'
+    expected_node = {}
+    assert_equal_json_sorted( expected_node.to_json, actual_node_hash.to_json)
 
     # Node details API
     actual_node = GRPC reporting, :read_node, Reporting::Id.new(id: '999f4e51-b049-4b10-9555-555789999967')
