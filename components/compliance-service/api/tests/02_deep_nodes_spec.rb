@@ -1074,6 +1074,8 @@ describe File.basename(__FILE__) do
     actual_nodes = GRPC reporting, :list_nodes, Reporting::Query.new(filters: [
         Reporting::ListFilter.new(type: 'profile_id', values: ['447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4'])
     ])
+    actual_nodes_hash = actual_nodes.to_h
+    actual_nodes_hash[:nodes].each { |c| c[:latest_report][:end_time] = 'SOMETIME_IN_THE_LAST_24H' }
     expected_nodes = {
       "nodes": [
         {
@@ -1093,7 +1095,7 @@ describe File.basename(__FILE__) do
               "waived": {
               }
             },
-            "endTime": "2020-08-14T09:23:24Z",
+            "endTime": "SOMETIME_IN_THE_LAST_24H",
             "id": "44024b50-2e0d-42fa-cccc-aaaaaaaaa003",
             "status": "passed"
           },
@@ -1117,6 +1119,6 @@ describe File.basename(__FILE__) do
       "total": 1,
       "totalPassed": 1
     }.to_json
-    assert_equal_json_sorted(expected_nodes, actual_nodes.to_json)
+    assert_equal_json_sorted(expected_nodes, actual_nodes_hash.to_json)
   end
 end
