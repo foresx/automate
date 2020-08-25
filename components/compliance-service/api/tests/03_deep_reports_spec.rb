@@ -314,7 +314,8 @@ describe File.basename(__FILE__) do
 
     actual_data = GRPC reporting, :list_reports, Reporting::Query.new(filters: [
         Reporting::ListFilter.new(type: 'profile_id',
-                                  values: ['41a02784bfea15592ba2748d55927d8d1f9da205816ef18d3bb2ebe4c5ce18a9'])
+                                  values: ['41a02784bfea15592ba2748d55927d8d1f9da205816ef18d3bb2ebe4c5ce18a9']),
+        Reporting::ListFilter.new(type: 'end_time', values: ['2018-03-04T23:59:59Z'])
     ], per_page: 2)
     expected_json = {
         "reports": [
