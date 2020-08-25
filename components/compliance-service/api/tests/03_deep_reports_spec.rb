@@ -25,7 +25,152 @@ describe File.basename(__FILE__) do
     ])
     actual_data_hash = actual_data.to_h
     actual_data_hash[:reports].each { |r| r[:end_time] = 'SOMETIME_IN_THE_LAST_24H' }
-    expected_json = {'what':true}.to_json
+    expected_json = {
+      "reports": [
+        {
+          "chef_organization": "",
+          "chef_server": "",
+          "chef_tags": [
+
+          ],
+          "controls": {
+            "failed": {
+              "critical": 0,
+              "major": 0,
+              "minor": 0,
+              "total": 0
+            },
+            "passed": {
+              "total": 4
+            },
+            "skipped": {
+              "total": 1
+            },
+            "total": 5,
+            "waived": {
+              "total": 0
+            }
+          },
+          "end_time": "SOMETIME_IN_THE_LAST_24H",
+          "environment": "",
+          "fqdn": "",
+          "id": "44024b50-2e0d-42fa-cccc-aaaaaaaaa002",
+          "ipaddress": "192.168.56.66",
+          "job_id": "",
+          "node_id": "34cbbb4c-c502-4971-1111-888888888888",
+          "node_name": "osx(2)-omega-pro1(f)-pro2(w)-failed",
+          "platform": null,
+          "profiles": [
+
+          ],
+          "projects": [
+
+          ],
+          "roles": [
+
+          ],
+          "statistics": null,
+          "status": "passed",
+          "status_message": "",
+          "version": ""
+        },
+        {
+          "chef_organization": "",
+          "chef_server": "",
+          "chef_tags": [
+
+          ],
+          "controls": {
+            "failed": {
+              "critical": 0,
+              "major": 0,
+              "minor": 0,
+              "total": 0
+            },
+            "passed": {
+              "total": 4
+            },
+            "skipped": {
+              "total": 1
+            },
+            "total": 5,
+            "waived": {
+              "total": 0
+            }
+          },
+          "end_time": "SOMETIME_IN_THE_LAST_24H",
+          "environment": "",
+          "fqdn": "",
+          "id": "44024b50-2e0d-42fa-cccc-aaaaaaaaa003",
+          "ipaddress": "192.168.56.66",
+          "job_id": "",
+          "node_id": "34cbbb4c-c502-4971-1111-888888888888",
+          "node_name": "osx(2)-omega-pro1(f)-pro2(w)-failed",
+          "platform": null,
+          "profiles": [
+
+          ],
+          "projects": [
+
+          ],
+          "roles": [
+
+          ],
+          "statistics": null,
+          "status": "passed",
+          "status_message": "",
+          "version": ""
+        },
+        {
+          "chef_organization": "",
+          "chef_server": "",
+          "chef_tags": [
+
+          ],
+          "controls": {
+            "failed": {
+              "critical": 2,
+              "major": 0,
+              "minor": 0,
+              "total": 2
+            },
+            "passed": {
+              "total": 0
+            },
+            "skipped": {
+              "total": 0
+            },
+            "total": 5,
+            "waived": {
+              "total": 3
+            }
+          },
+          "end_time": "SOMETIME_IN_THE_LAST_24H",
+          "environment": "",
+          "fqdn": "",
+          "id": "44024b50-2e0d-42fa-cccc-aaaaaaaaa001",
+          "ipaddress": "192.168.56.66",
+          "job_id": "",
+          "node_id": "34cbbb4c-c502-4971-1111-888888888888",
+          "node_name": "osx(2)-omega-pro1(f)-pro2(w)-failed",
+          "platform": null,
+          "profiles": [
+
+          ],
+          "projects": [
+
+          ],
+          "roles": [
+
+          ],
+          "statistics": null,
+          "status": "failed",
+          "status_message": "",
+          "version": ""
+        }
+      ],
+      "total": 3
+    }.to_json
     assert_equal_json_sorted(expected_json, actual_data_hash.to_json)
 
     actual_data = GRPC reporting, :list_reports, Reporting::Query.new(filters: [
