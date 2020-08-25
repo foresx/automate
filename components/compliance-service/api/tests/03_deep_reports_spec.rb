@@ -23,13 +23,15 @@ describe File.basename(__FILE__) do
         Reporting::ListFilter.new(type: 'profile_id',
                                   values: ['447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4'])
     ])
+    actual_nodes_hash = actual_nodes.to_h
+    actual_nodes_hash[:reports].each { |r| c[:end_time] = 'SOMETIME_IN_THE_LAST_24H' }
     expected_json = {'what':true}.to_json
-    assert_equal_json_sorted(expected_json, actual_data.to_json)
+    assert_equal_json_sorted(expected_json, actual_nodes_hash.to_json)
 
     actual_data = GRPC reporting, :list_reports, Reporting::Query.new(filters: [
         Reporting::ListFilter.new(type: 'profile_id',
                                   values: ['41a02784bfea15592ba2748d55927d8d1f9da205816ef18d3bb2ebe4c5ce18a9']),
-        Reporting::ListFilter.new(type: 'end_time', values: ['2018-03-04T00:00:00Z']),
+        Reporting::ListFilter.new(type: 'start_time', values: ['2018-03-04T00:00:00Z']),
         Reporting::ListFilter.new(type: 'end_time', values: ['2018-03-05T23:59:59Z'])
     ])
     expected_json = {
