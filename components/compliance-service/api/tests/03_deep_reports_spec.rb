@@ -59,7 +59,7 @@ describe File.basename(__FILE__) do
           "job_id": "",
           "node_id": "34cbbb4c-c502-4971-1111-888888888888",
           "node_name": "osx(2)-omega-pro1(f)-pro2(w)-failed",
-          "platform": null,
+          "platform": nil,
           "profiles": [
 
           ],
@@ -69,7 +69,7 @@ describe File.basename(__FILE__) do
           "roles": [
 
           ],
-          "statistics": null,
+          "statistics": nil,
           "status": "passed",
           "status_message": "",
           "version": ""
@@ -106,7 +106,7 @@ describe File.basename(__FILE__) do
           "job_id": "",
           "node_id": "34cbbb4c-c502-4971-1111-888888888888",
           "node_name": "osx(2)-omega-pro1(f)-pro2(w)-failed",
-          "platform": null,
+          "platform": nil,
           "profiles": [
 
           ],
@@ -116,7 +116,7 @@ describe File.basename(__FILE__) do
           "roles": [
 
           ],
-          "statistics": null,
+          "statistics": nil,
           "status": "passed",
           "status_message": "",
           "version": ""
@@ -153,7 +153,7 @@ describe File.basename(__FILE__) do
           "job_id": "",
           "node_id": "34cbbb4c-c502-4971-1111-888888888888",
           "node_name": "osx(2)-omega-pro1(f)-pro2(w)-failed",
-          "platform": null,
+          "platform": nil,
           "profiles": [
 
           ],
@@ -163,7 +163,7 @@ describe File.basename(__FILE__) do
           "roles": [
 
           ],
-          "statistics": null,
+          "statistics": nil,
           "status": "failed",
           "status_message": "",
           "version": ""
