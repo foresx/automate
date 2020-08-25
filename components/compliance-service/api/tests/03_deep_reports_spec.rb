@@ -10,9 +10,27 @@ describe File.basename(__FILE__) do
 
   it "works" do
 
+    # Filter reports by a profile that was NOT scanned in the last 24h
     actual_data = GRPC reporting, :list_reports, Reporting::Query.new(filters: [
         Reporting::ListFilter.new(type: 'profile_id',
                                   values: ['41a02784bfea15592ba2748d55927d8d1f9da205816ef18d3bb2ebe4c5ce18a9'])
+    ])
+    expected_json = {}.to_json
+    assert_equal_json_sorted(expected_json, actual_data.to_json)
+
+    # Filter reports by a profile that was scanned in the last 24h
+    actual_data = GRPC reporting, :list_reports, Reporting::Query.new(filters: [
+        Reporting::ListFilter.new(type: 'profile_id',
+                                  values: ['447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4'])
+    ])
+    expected_json = {'what':true}.to_json
+    assert_equal_json_sorted(expected_json, actual_data.to_json)
+
+    actual_data = GRPC reporting, :list_reports, Reporting::Query.new(filters: [
+        Reporting::ListFilter.new(type: 'profile_id',
+                                  values: ['41a02784bfea15592ba2748d55927d8d1f9da205816ef18d3bb2ebe4c5ce18a9']),
+        Reporting::ListFilter.new(type: 'end_time', values: ['2018-03-04T00:00:00Z']),
+        Reporting::ListFilter.new(type: 'end_time', values: ['2018-03-05T23:59:59Z'])
     ])
     expected_json = {
         "reports" => [
