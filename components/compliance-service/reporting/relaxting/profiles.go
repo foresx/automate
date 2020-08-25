@@ -658,7 +658,7 @@ func (backend ES2Backend) getProfileMinsFromNodes(
 	// clearing the filters because we want to filter profiles based on their status not the overall scan status
 	filters["status"] = make([]string, 0)
 
-	depth, err := backend.NewDepth(filters, false)
+	depth, err := backend.NewDepth(filters, true)
 	if err != nil {
 		return nil, nil, errors.Wrap(err, fmt.Sprintf("%s unable to get depth level for report", myName))
 	}

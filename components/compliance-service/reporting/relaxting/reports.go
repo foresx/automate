@@ -223,7 +223,7 @@ func (backend *ES2Backend) GetReports(from int32, size int32, filters map[string
 	sortField string, sortAsc bool) ([]*reportingapi.Report, int64, error) {
 	myName := "GetReports"
 
-	depth, err := backend.NewDepth(filters, true)
+	depth, err := backend.NewDepth(filters, false)
 	if err != nil {
 		return nil, 0, errors.Wrap(err, fmt.Sprintf("%s unable to get depth level for report", myName))
 	}
@@ -336,7 +336,7 @@ func (backend *ES2Backend) GetReport(reportId string,
 	myName := "GetReport"
 	var report *reportingapi.Report
 
-	depth, err := backend.NewDepth(filters, true)
+	depth, err := backend.NewDepth(filters, false)
 	if err != nil {
 		return report, errors.Wrapf(err, "%s unable to get depth level for report", myName)
 	}
