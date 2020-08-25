@@ -38,75 +38,7 @@ describe File.basename(__FILE__) do
     actual_nodes = GRPC reporting, :list_nodes, Reporting::Query.new(filters: [])
     actual_nodes_hash = actual_nodes.to_h
     actual_nodes_hash[:nodes].each { |c| c[:latest_report][:end_time] = 'SOMETIME_IN_THE_LAST_24H' }
-    expected_nodes = {
-      "nodes": [
-        {
-          "environment": "DevSec Prod Alpha",
-          "id": "888f4e51-b049-4b10-9555-111222333333",
-          "latestReport": {
-            "controls": {
-              "failed": {
-              },
-              "passed": {
-              },
-              "skipped": {
-              },
-              "waived": {
-              }
-            },
-            "endTime": "SOMETIME_IN_THE_LAST_24H",
-            "id": "zz93e1b2-36d6-439e-ac70-cccccccceemm",
-            "status": "failed"
-          },
-          "name": "ubuntu(0)-alpha-failed",
-          "platform": {
-            "full": "unknown unknown",
-            "name": "unknown",
-            "release": "unknown"
-          }
-        },
-        {
-          "environment": "DevSec Prod Omega",
-          "id": "34cbbb4c-c502-4971-1111-888888888888",
-          "latestReport": {
-            "controls": {
-              "failed": {
-              },
-              "passed": {
-                "total": 4
-              },
-              "skipped": {
-                "total": 1
-              },
-              "total": 5,
-              "waived": {
-              }
-            },
-            "endTime": "SOMETIME_IN_THE_LAST_24H",
-            "id": "44024b50-2e0d-42fa-cccc-aaaaaaaaa003",
-            "status": "passed"
-          },
-          "name": "osx(2)-omega-pro1(f)-pro2(w)-failed",
-          "platform": {
-            "full": "mac_os_x 17.7.0",
-            "name": "mac_os_x",
-            "release": "17.7.0"
-          },
-          "profiles": [
-            {
-              "full": "My Profile 1 title, v1.0.1",
-              "id": "447542ecfb8a8800ed0146039da3af8fed047f575f6037cfba75f3b664a97ea4",
-              "name": "myprofile1",
-              "status": "passed",
-              "version": "1.0.1"
-            }
-          ]
-        }
-      ],
-      "total": 2,
-      "totalFailed": 1,
-      "totalPassed": 1
-    }
+    expected_nodes = {}
     assert_equal_json_sorted(expected_nodes.to_json, actual_nodes_hash.to_json)
 
     # Get all nodes, sorted by latest_report(default), asc(default) order
