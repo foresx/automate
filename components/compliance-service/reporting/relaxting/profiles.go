@@ -313,6 +313,8 @@ func (backend *ES2Backend) GetProfile(hash string) (reportingapi.Profile, error)
 // todo - deep filtering - this should be made depth aware as this still needs to be consumed by api users
 // todo - do we need to handle waiver info in here too?
 func (backend ES2Backend) GetProfileSummaryByProfileId(profileId string, filters map[string][]string) (*stats.ProfileSummary, error) {
+	// Only end_time matters for this call
+	filters["start_time"] = []string{}
 	esIndex, err := GetEsIndex(filters, false)
 	if err != nil {
 		return nil, errors.Wrap(err, "GetProfileSummaryByProfileId, unable to get index")
@@ -658,6 +660,8 @@ func (backend ES2Backend) getProfileMinsFromNodes(
 	// clearing the filters because we want to filter profiles based on their status not the overall scan status
 	filters["status"] = make([]string, 0)
 
+	// Only end_time matters for this call
+	filters["start_time"] = []string{}
 	depth, err := backend.NewDepth(filters, true)
 	if err != nil {
 		return nil, nil, errors.Wrap(err, fmt.Sprintf("%s unable to get depth level for report", myName))

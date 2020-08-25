@@ -697,8 +697,8 @@ func (backend *ES2Backend) GetControlListItems(ctx context.Context, filters map[
 		return nil, err
 	}
 
-	// we need to use start_time or else we won't see all of the controls that were used outside of end_time day
-	// we use start_time for the same reason we need it for trends
+	// Only end_time matters for this call
+	filters["start_time"] = []string{}
 	esIndex, err := GetEsIndex(filters, false)
 	if err != nil {
 		return nil, errors.Wrap(err, myName)
