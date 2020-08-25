@@ -253,12 +253,12 @@ func (backend *ESClient) InsertInspecSummary(ctx context.Context, id string, end
 		return errors.Wrap(err, "InsertInspecSummary")
 	}
 
-	if data.DayLatest {
-		err = backend.setDayLatestToFalse(ctx, data.NodeID, id, mapping)
-		if err != nil {
-			return err
-		}
-	}
+	//if data.DayLatest {
+	//	err = backend.setDayLatestToFalse(ctx, data.NodeID, id, mapping)
+	//	if err != nil {
+	//		return err
+	//	}
+	//}
 	return backend.setDailyLatestToFalse(ctx, data.NodeID, id, index)
 }
 
