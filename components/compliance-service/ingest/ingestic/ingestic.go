@@ -324,6 +324,7 @@ func (backend *ESClient) setDayLatestToFalse(ctx context.Context, nodeId string,
 	indexOneDayAgo := mapping.IndexTimeseriesFmt(oneDayAgo) + "*"
 	indices := []string{indexOneDayAgo, indexNow}
 
+	// TODO: Refresh set to false prevented the setDailyLatestToFalse to work
 	_, err := elastic.NewUpdateByQueryService(backend.client).
 		Index(indices...).
 		Query(boolQueryDayLatestThisNodeNotThisReport).
