@@ -169,22 +169,20 @@ func MapValues(m map[string]string) []string {
 // GetEsIndex returns the index(s) to query based on the end_time filter
 // useStartTime should normally be false unless you have a good reason to make it true.
 // A good reason would be when you pass a job_id and you don't know when it ran so you want to search all indices
-func GetEsIndex(filters map[string][]string, useSummaryIndex bool, useStartTime bool) (esIndex string, err error) {
-	var startDateAsString string
+func GetEsIndex(filters map[string][]string, useSummaryIndex bool) (esIndex string, err error) {
+	// Extract end_time from filters or set it to today (UTC) if not specified
 	endDateAsString, err := computeIndexDate(firstOrEmpty(filters["end_time"]))
 	if err != nil {
 		return esIndex, err
 	}
-	logrus.Debugf("!!!!!!1 GetEsIndex called with filters=%+v   useSummaryIndex %t, useStartTime %t", filters, useSummaryIndex, useStartTime)
-	if useStartTime {
-		startDateAsString = firstOrEmpty(filters["start_time"])
-		logrus.Debugf("!!!!!!2 GetEsIndex (if) returning startDateAsString = %s", startDateAsString)
-	//}
-	//else if len(filters["start_time"]) == 0 && len(filters["end_time"]) == 0 {
-	//	// If no `start_time` and `end_time` are provided, we use start_date as yesterday's UTC date
-	//	// and `end_date` as today's UTC day. This way, we have the indices to query the last 24 hours worth of reports
-	//	startDateAsString = time.Now().Add(-24 * time.Hour).UTC().Format(time.RFC3339)
-	//	logrus.Debugf("!!!!!!2 GetEsIndex (else if) returning startDateAsString = %s", startDateAsString)
+	logrus.Debugf("!!!!!!1 GetEsIndex called with filters=%+v   useSummaryIndex %t, useStartTime %t", filters, useSummaryIndex)
+
+	var startDateAsString string
+	if len(filters["start_time"]) == 0 && len(filters["end_time"]) == 0 {
+		// If no `start_time` and `end_time` are provided, we use start_date as yesterday's UTC date
+		// and `end_date` as today's UTC day. This way, we have the indices to query the last 24 hours worth of reports
+		startDateAsString = time.Now().Add(-24 * time.Hour).UTC().Format(time.RFC3339)
+		logrus.Debugf("!!!!!!2 GetEsIndex (else if) returning startDateAsString = %s", startDateAsString)
 	} else {
 		startDateAsString = endDateAsString
 		logrus.Debugf("!!!!!!2 GetEsIndex (else) returning startDateAsString = %s", startDateAsString)
@@ -235,7 +233,6 @@ func computeIndexDate(endTime string) (string, error) {
 		if err != nil {
 			return "", errors.New(fmt.Sprintf("computeIndexDate - could not parse end_time %s.", endTime))
 		}
-
 		indexDate = endTimeAsTime
 	} else {
 		indexDate = time.Now().UTC()

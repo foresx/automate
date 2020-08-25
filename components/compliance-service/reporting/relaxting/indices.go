@@ -51,27 +51,29 @@ func now() time.Time {
 }
 
 //IndexDates takes a start time and end time, both as strings,  formatted as RFC3339 UTC, and returns a comma separated list of strings, each of which is an ES index wildcard.
-func IndexDates(prefix string, startTimeAsStringRFC3338 string, endTimeAsStringRFC3338 string) (indices string, err error) {
+func IndexDates(prefix string, startTimeAsStringRFC3339 string, endTimeAsStringRFC3339 string) (indices string, err error) {
 	var startTime, endTime time.Time
 
-	if len(startTimeAsStringRFC3338) == 0 {
-		startTime = time.Date(2017, time.January, 1, 0, 0, 0, 0, time.UTC)
+	if len(startTimeAsStringRFC3339) == 0 {
+		err = errors.New("start_time must be defined")
+		logrus.Error(err)
+		return indices, err
 	} else {
-		startTime, err = time.Parse(time.RFC3339, startTimeAsStringRFC3338)
+		startTime, err = time.Parse(time.RFC3339, startTimeAsStringRFC3339)
 		if err != nil {
 			logrus.Error(err)
-			err = errors.New(fmt.Sprintf(TimeParseError, "startTime", startTimeAsStringRFC3338))
+			err = errors.New(fmt.Sprintf(TimeParseError, "startTime", startTimeAsStringRFC3339))
 			return indices, err
 		}
 	}
 
-	if len(endTimeAsStringRFC3338) == 0 {
+	if len(endTimeAsStringRFC3339) == 0 {
 		endTime = now().UTC()
 	} else {
-		endTime, err = time.Parse(time.RFC3339, endTimeAsStringRFC3338)
+		endTime, err = time.Parse(time.RFC3339, endTimeAsStringRFC3339)
 		if err != nil {
 			logrus.Error(err)
-			err = errors.New(fmt.Sprintf(TimeParseError, "endTime", endTimeAsStringRFC3338))
+			err = errors.New(fmt.Sprintf(TimeParseError, "endTime", endTimeAsStringRFC3339))
 			return indices, err
 		}
 	}
