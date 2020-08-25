@@ -223,7 +223,7 @@ func (backend *ES2Backend) GetReports(from int32, size int32, filters map[string
 	sortField string, sortAsc bool) ([]*reportingapi.Report, int64, error) {
 	myName := "GetReports"
 
-	depth, err := backend.NewDepth(filters, true, false)
+	depth, err := backend.NewDepth(filters, true)
 	if err != nil {
 		return nil, 0, errors.Wrap(err, fmt.Sprintf("%s unable to get depth level for report", myName))
 	}
@@ -336,7 +336,7 @@ func (backend *ES2Backend) GetReport(reportId string,
 	myName := "GetReport"
 	var report *reportingapi.Report
 
-	depth, err := backend.NewDepth(filters, true, false)
+	depth, err := backend.NewDepth(filters, true)
 	if err != nil {
 		return report, errors.Wrapf(err, "%s unable to get depth level for report", myName)
 	}
@@ -699,7 +699,7 @@ func (backend *ES2Backend) GetControlListItems(ctx context.Context, filters map[
 
 	// we need to use start_time or else we won't see all of the controls that were used outside of end_time day
 	// we use start_time for the same reason we need it for trends
-	esIndex, err := GetEsIndex(filters, false, false)
+	esIndex, err := GetEsIndex(filters, false)
 	if err != nil {
 		return nil, errors.Wrap(err, myName)
 	}

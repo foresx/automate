@@ -78,7 +78,7 @@ func (srv *Server) ListReportIds(ctx context.Context, in *reporting.Query) (*rep
 	}
 
 	// Step 1: Retrieving the latest report ID for each node based on the provided filters
-	esIndex, err := relaxting.GetEsIndex(formattedFilters, false, true)
+	esIndex, err := relaxting.GetEsIndex(formattedFilters, false)
 	if err != nil {
 		return nil, status.Error(codes.Internal, fmt.Sprintf("Failed to determine how many reports exist: %s", err))
 	}
@@ -199,7 +199,7 @@ func (srv *Server) Export(in *reporting.Query, stream reporting.ReportingService
 	}
 
 	// Step 1: Retrieving the latest report ID for each node based on the provided filters
-	esIndex, err := relaxting.GetEsIndex(formattedFilters, false, true)
+	esIndex, err := relaxting.GetEsIndex(formattedFilters, false)
 	if err != nil {
 		return status.Error(codes.Internal, fmt.Sprintf("Failed to determine how many reports exist: %s", err))
 	}

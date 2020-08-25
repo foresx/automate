@@ -167,26 +167,30 @@ func MapValues(m map[string]string) []string {
 }
 
 // GetEsIndex returns the index(s) to query based on the end_time filter
-// useStartTime should normally be false unless you have a good reason to make it true.
 // A good reason would be when you pass a job_id and you don't know when it ran so you want to search all indices
 func GetEsIndex(filters map[string][]string, useSummaryIndex bool) (esIndex string, err error) {
-	// Extract end_time from filters or set it to today (UTC) if not specified
+	// Extract end_time from filters or set it to today's UTC day if not specified
 	endDateAsString, err := computeIndexDate(firstOrEmpty(filters["end_time"]))
 	if err != nil {
 		return esIndex, err
 	}
-	logrus.Debugf("!!!!!!1 GetEsIndex called with filters=%+v   useSummaryIndex %t, useStartTime %t", filters, useSummaryIndex)
 
 	var startDateAsString string
 	if len(filters["start_time"]) == 0 && len(filters["end_time"]) == 0 {
-		// If no `start_time` and `end_time` are provided, we use start_date as yesterday's UTC date
-		// and `end_date` as today's UTC day. This way, we have the indices to query the last 24 hours worth of reports
+		// With `start_time` and `end_time` filters, we use start_date as yesterday's UTC date and `end_date` as today's UTC day.
+		// This way, we have the indices to query the last 24 hours worth of reports
 		startDateAsString = time.Now().Add(-24 * time.Hour).UTC().Format(time.RFC3339)
-		logrus.Debugf("!!!!!!2 GetEsIndex (else if) returning startDateAsString = %s", startDateAsString)
-	} else {
+	} else if len(filters["start_time"]) == 0 {
 		startDateAsString = endDateAsString
-		logrus.Debugf("!!!!!!2 GetEsIndex (else) returning startDateAsString = %s", startDateAsString)
+	} else {
+		// Using the start_time specified in the filters
+		startDateAsString, err = computeIndexDate(filters["start_time"][0])
+		if err != nil {
+			return esIndex, err
+		}
 	}
+
+	logrus.Debugf("GetEsIndex called with (filters=%+v), using startDateAsString=%s, endDateAsString=%s", filters, startDateAsString, endDateAsString)
 
 	jobId := firstOrEmpty(filters["job_id"])
 
