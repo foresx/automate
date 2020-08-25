@@ -1,4 +1,25 @@
 {
+  "type": "inspec_report",
+  "node_uuid": "34cbbb4c-c502-4971-1111-888888888888",
+  "report_uuid": "44024b50-2e0d-42fa-cccc-aaaaaaaaa003",
+  "job_uuid": "12345678-1234-123e-bbbb-777777700003",
+  "node_name": "osx(2)-omega-pro1(f)-pro2(w)-failed",
+  "environment": "DevSec Prod Omega",
+  "roles": [ "base_osx", "apache_osx" ],
+  "recipes": [],
+  "end_time": "2100-01-01T00:00:01Z",
+  "other_checks": [],
+  "policy_name": "",
+  "policy_group": "",
+  "organization_name": "",
+  "source_fqdn": "localhost",
+  "chef_tags": [],
+  "ipaddress": "192.168.56.66",
+  "fqdn": "osx-workstation.example.com",
+  "statistics": {
+    "duration": 0.074509
+  },
+  "version": "4.18.5",
   "platform": {
     "name": "mac_os_x",
     "release": "17.7.0"
@@ -151,26 +172,5 @@
       ],
       "status": "loaded"
     }
-  ],
-  "statistics": {
-    "duration": 0.074509
-  },
-  "version": "4.18.5",
-  "type": "inspec_report",
-  "node_uuid": "34cbbb4c-c502-4971-1111-888888888888",
-  "report_uuid": "44024b50-2e0d-42fa-cccc-aaaaaaaaa003",
-  "job_uuid": "12345678-1234-123e-bbbb-777777700003",
-  "node_name": "osx(2)-omega-pro1(f)-pro2(w)-failed",
-  "environment": "DevSec Prod Omega",
-  "roles": [ "base_osx", "apache_osx" ],
-  "recipes": [],
-  "end_time": "2100-01-01T00:00:01Z",
-  "other_checks": [],
-  "policy_name": "",
-  "policy_group": "",
-  "organization_name": "",
-  "source_fqdn": "localhost",
-  "chef_tags": [],
-  "ipaddress": "192.168.56.66",
-  "fqdn": "osx-workstation.example.com"
+  ]
 }

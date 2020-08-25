@@ -24,7 +24,7 @@
   "chef_tags": ["mylinux", "my.tag", "some=tag"],
   "ipaddress": "188.38.98.166",
   "fqdn": "web-ubu-fail.example.com",
-  "profiles": [],
   "status": "failed",
-  "status_message": "ERROR: InSpec not found."
+  "status_message": "ERROR: InSpec not found.",
+  "profiles": []
 }
